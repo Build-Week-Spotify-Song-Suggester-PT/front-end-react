@@ -2,6 +2,8 @@ import React from "react";
 // import token authentication
 import { axiosWithAuth } from '../auth/axiosWithAuth';
 
+import Button Icons from "grommet";
+
 class Login extends React.Component {
     state = {
         credentials: {
@@ -37,23 +39,27 @@ login = e => {
 render() {
     return (
         <>
-        <form onSubmit={this.login}>
-            <input
-            type="text"
+        {/* <Form onSubmit={this.login}>
+            <input */}
+            <Form>
+                <FormField 
             name="username"
-            placeholder="username"
+            label="username"
             value={this.state.credentials.username}
             onChange={this.handleChange}
             />
-            <input 
-            type="password"
+            <FormField
             name="password"
-            placeholder="password"
+            label="password"
             value={this.state.credentials.password}
             onChange={this.handleChange}
             />
-            <button>Log In</button>
-        </form>
+            <Button
+            icon={<Icons.Edit />}
+            label="Edit"
+            onClick={() => {}}
+                />
+        </Form>
         </>
     );
 }

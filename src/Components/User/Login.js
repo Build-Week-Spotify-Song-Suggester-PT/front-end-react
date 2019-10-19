@@ -2,7 +2,7 @@ import React from "react";
 // import token authentication
 import { axiosWithAuth } from '../auth/axiosWithAuth';
 
-import Button Icons from "grommet";
+import {Button, Icons} from "grommet";
 
 class Login extends React.Component {
     state = {

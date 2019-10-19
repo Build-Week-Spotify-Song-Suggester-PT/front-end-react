@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
 
@@ -9,9 +9,13 @@ const Signup = props => {
   const [error, setError] = useState(false);
 
   const submitHandler = e => {
+    let caseSensitiveInput = {
+      ...e.value,
+      email: e.value.email.toLowerCase()
+    };
     setError(false);
     axiosWithAuth()
-      .post('/accounts/register', e.value)
+      .post('/accounts/register', caseSensitiveInput)
       .then(res => {
         localStorage.setItem('token', res.data.token);
         props.history.push(`/user/${res.data.id}`);
@@ -32,9 +36,12 @@ const Signup = props => {
         Sign Up
       </Heading>
       {error && (
-        <p style={{ margin: '0 auto', color: 'red' }}>
-          Something went wrong. Please try again.
-        </p>
+        <Fragment>
+          <p style={{ margin: '0 auto', color: 'red' }}>
+            Either something went wrong, or use a different email.
+          </p>
+          <p style={{ margin: '0 auto', color: 'red' }}>Please try again.</p>
+        </Fragment>
       )}
       <Form onSubmit={submitHandler}>
         <FormField name="name" label="Name" required={true} />

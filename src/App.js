@@ -7,6 +7,7 @@ const App = () => {
   return (
     <div className="App">
       <Grommet>
+        {/* Keep components between <Grommet> for style rendering */}
         <Routes />
       </Grommet>
     </div>

@@ -6,6 +6,7 @@ import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
 import { Heading, Box, Form, FormField, Button, Text } from 'grommet';
 
 const Login = props => {
+  console.log(props);
   const [error, setError] = useState(false);
 
   const submitHandler = e => {
@@ -14,7 +15,8 @@ const Login = props => {
       .post('/accounts/login', e.value)
       .then(res => {
         localStorage.setItem('token', res.data.token);
-        // props.history.push('/')
+        props.history.push('/user/1');
+        console.log(res);
       })
       .catch(() => {
         setError(true);

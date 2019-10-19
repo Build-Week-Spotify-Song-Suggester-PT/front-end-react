@@ -1,9 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
+
+//Styling Library
 import { Heading, Box, Form, FormField, Button } from 'grommet';
 
-const Signup = () => {
+const Signup = props => {
+  const [error, setError] = useState(false);
+
   const submitHandler = e => {
-    console.log(e.value);
+    setError(false);
+    axiosWithAuth()
+      .post('/accounts/register', e.value)
+      .then(res => {
+        localStorage.setItem('token', res.data.token);
+        // props.history.push('/')
+      })
+      .catch(err => {
+        setError(true);
+        console.log(err);
+      });
   };
   return (
     <Box
@@ -16,10 +31,20 @@ const Signup = () => {
       <Heading alignSelf="center" responsive={true}>
         Sign Up
       </Heading>
+      {error && (
+        <p style={{ margin: '0 auto', color: 'red' }}>
+          Something went wrong. Please try again.
+        </p>
+      )}
       <Form onSubmit={submitHandler}>
         <FormField name="name" label="Name" required={true} />
-        <FormField name="email" label="Email" required={true} />
-        <FormField name="password" label="Password" required={true} />
+        <FormField type="email" name="email" label="Email" required={true} />
+        <FormField
+          type="password"
+          name="password"
+          label="Password"
+          required={true}
+        />
         <Button type="submit" primary label="Register" />
       </Form>
     </Box>

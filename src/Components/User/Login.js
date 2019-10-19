@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import token authentication
+import { Link } from 'react-router-dom';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
 
 //Styling Library
@@ -47,7 +47,9 @@ const Login = props => {
         />
         <Box direction="row-responsive" justify="between" align="center">
           <Button type="submit" primary label="Login" />
-          <Text>Need to Sign up? Click Here</Text>
+          <Text>
+            Need to Sign up? <Link to="/signup">Click Here</Link>
+          </Text>
         </Box>
       </Form>
     </Box>

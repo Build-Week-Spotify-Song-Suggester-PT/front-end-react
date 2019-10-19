@@ -1,15 +1,16 @@
 import React from 'react';
-import Login from './Components/User/Login';
 import { Grommet } from 'grommet';
 
-function App() {
+import Routes from './Components/Routes';
+
+const App = () => {
   return (
     <div className="App">
       <Grommet>
-        <Login />
+        <Routes />
       </Grommet>
     </div>
   );
-}
+};
 
 export default App;

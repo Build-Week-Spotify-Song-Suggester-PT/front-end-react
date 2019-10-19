@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
 
 //Styling Library
-import { Heading, Box, Form, FormField, Button } from 'grommet';
+import { Heading, Box, Form, FormField, Button, Text } from 'grommet';
 
 const Signup = props => {
   const [error, setError] = useState(false);
@@ -46,7 +47,9 @@ const Signup = props => {
         />
         <Box direction="row-responsive" justify="between" align="center">
           <Button type="submit" primary label="Register" />
-          <Text>Need to Login? Click Here</Text>
+          <Text>
+            Need to Login? <Link to="/login">Click Here</Link>
+          </Text>
         </Box>
       </Form>
     </Box>
@@ -54,8 +57,3 @@ const Signup = props => {
 };
 
 export default Signup;
-
-// 500px
-// 768px
-//
-//

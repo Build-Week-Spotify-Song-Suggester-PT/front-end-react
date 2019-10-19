@@ -1,9 +1,12 @@
 import React from 'react';
+import { Grommet } from 'grommet';
 
 function App() {
   return (
     <div className="App">
-      <h1>CLEAN SLATE</h1>
+      <Grommet>
+        {/* CLEAN SLATE */}
+      </Grommet>
     </div>
   );
 }

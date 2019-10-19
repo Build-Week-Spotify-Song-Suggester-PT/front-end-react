@@ -15,9 +15,8 @@ const Signup = props => {
         localStorage.setItem('token', res.data.token);
         // props.history.push('/')
       })
-      .catch(err => {
+      .catch(() => {
         setError(true);
-        console.log(err);
       });
   };
   return (

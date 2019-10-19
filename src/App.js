@@ -1,12 +1,12 @@
 import React from 'react';
-import Signup from './Components/User/Signup';
+import Login from './Components/User/Login';
 import { Grommet } from 'grommet';
 
 function App() {
   return (
     <div className="App">
       <Grommet>
-        <Signup />
+        <Login />
       </Grommet>
     </div>
   );

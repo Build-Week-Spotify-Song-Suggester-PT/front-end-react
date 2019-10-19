@@ -14,7 +14,7 @@ const Signup = props => {
       .post('/accounts/register', e.value)
       .then(res => {
         localStorage.setItem('token', res.data.token);
-        props.history.push('/user/1');
+        props.history.push(`/user/${res.data.id}`);
       })
       .catch(() => {
         setError(true);

@@ -6,17 +6,19 @@ import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
 import { Heading, Box, Form, FormField, Button, Text } from 'grommet';
 
 const Login = props => {
-  console.log(props);
   const [error, setError] = useState(false);
 
   const submitHandler = e => {
+    let caseSensitiveInput = {
+      ...e.value,
+      email: e.value.email.toLowerCase()
+    };
     setError(false);
     axiosWithAuth()
-      .post('/accounts/login', e.value)
+      .post('/accounts/login', caseSensitiveInput)
       .then(res => {
         localStorage.setItem('token', res.data.token);
-        props.history.push('/user/1');
-        console.log(res);
+        props.history.push(`/user/${res.data.id}`);
       })
       .catch(() => {
         setError(true);

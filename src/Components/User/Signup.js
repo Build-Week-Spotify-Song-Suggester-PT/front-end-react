@@ -44,7 +44,10 @@ const Signup = props => {
           label="Password"
           required={true}
         />
-        <Button type="submit" primary label="Register" />
+        <Box direction="row-responsive" justify="between" align="center">
+          <Button type="submit" primary label="Register" />
+          <Text>Need to Login? Click Here</Text>
+        </Box>
       </Form>
     </Box>
   );

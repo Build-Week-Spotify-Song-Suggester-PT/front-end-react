@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
 
 //Styling Library
-import { Heading, Box, Form, FormField, Button } from 'grommet';
+import { Heading, Box, Form, FormField, Button, Text } from 'grommet';
 
 const Login = props => {
   const [error, setError] = useState(false);
@@ -45,12 +45,10 @@ const Login = props => {
           label="Password"
           required={true}
         />
-        <Button
-          type="submit"
-          primary
-          label="Login"
-          margin={{ horizontal: 'auto' }}
-        />
+        <Box direction="row-responsive" justify="between" align="center">
+          <Button type="submit" primary label="Login" />
+          <Text>Need to Sign up? Click Here</Text>
+        </Box>
       </Form>
     </Box>
   );

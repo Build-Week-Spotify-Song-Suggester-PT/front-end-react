@@ -1,14 +1,19 @@
 import React from 'react';
 import { Grommet } from 'grommet';
+import Nav from './Components/Nav';
 
-function App() {
+import Routes from './Components/Routes';
+
+const App = () => {
   return (
     <div className="App">
       <Grommet>
-        {/* CLEAN SLATE */}
+        <Nav />
+        {/* Keep components between <Grommet> for style rendering */}
+        <Routes />
       </Grommet>
     </div>
   );
-}
+};
 
 export default App;

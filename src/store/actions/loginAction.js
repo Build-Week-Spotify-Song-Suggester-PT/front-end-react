@@ -1,5 +1,5 @@
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
-import { authenticationAction } from './authenticationAction';
+import { userDataAction } from './userDataAction';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
@@ -9,15 +9,14 @@ export const loginAction = credentials => dispatch => {
     .post('/acconts/register', credentials)
     .then(res => {
       localStorage.setItem('token', res.data.token);
-      // props.history.push(`/user/${res.data.id}`);
-      authenticationAction(true);
+      userDataAction(true);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data.message
       });
     })
     .catch(() => {
-      authenticationAction(false);
+      userDataAction(false);
       dispatch({
         type: LOGIN_FAIL
       });

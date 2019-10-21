@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
-
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //Styling Library
 import { Heading, Box, Form, FormField, Button, Text } from 'grommet';
 
 const Login = props => {
-  console.log(props);
-
   const submitHandler = e => {
     let caseSensitiveInput = {
       ...e.value,
@@ -53,11 +49,9 @@ const Login = props => {
 };
 
 const mapStateToProps = state => {
-  const { auth, login } = state;
-  return {
-    authenticated: auth.authenticated,
-    error: login.error
-  };
+  console.log(state);
+
+  return {};
 };
 
 export default connect(

@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginAction } from '../../store/actions/authDataActions/loginAction';
+import { clearAuthData } from '../../store/actions/authDataActions/clearAuthData';
 
 //Styling Library
 import { Heading, Box, Form, FormField, Button, Text } from 'grommet';
 
-const Login = ({ authenticated, error, userID, loginAction }) => {
+const Login = ({
+  authenticated,
+  error,
+  userID,
+  loginAction,
+  clearAuthData
+}) => {
+  useEffect(() => {
+    clearAuthData();
+  }, [clearAuthData]);
+
   if (authenticated) {
     return <Redirect to={`/user/${userID}`} />;
   }
@@ -60,5 +71,5 @@ const mapStateToProps = ({ authData, userData }) => {
 
 export default connect(
   mapStateToProps,
-  { loginAction }
+  { loginAction, clearAuthData }
 )(Login);

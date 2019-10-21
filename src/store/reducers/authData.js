@@ -8,6 +8,8 @@ import {
   REGISTER_FAIL
 } from '../actions/authDataActions/signupAction';
 
+import { CLEAR_AUTH_DATA } from '../actions/authDataActions/clearAuthData';
+
 const initialState = {
   authenticated: false,
   message: '',
@@ -44,6 +46,8 @@ export const authData = (state = initialState, action) => {
         message: '',
         authError: true
       };
+    case CLEAR_AUTH_DATA:
+      return initialState;
     default:
       return state;
   }

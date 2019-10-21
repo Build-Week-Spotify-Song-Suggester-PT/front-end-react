@@ -3,6 +3,11 @@ import {
   LOGIN_FAIL
 } from '../actions/authDataActions/loginAction';
 
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAIL
+} from '../actions/authDataActions/signupAction';
+
 const initialState = {
   userID: null
 };
@@ -15,6 +20,16 @@ export const userData = (state = initialState, action) => {
         userID: action.payload.id
       };
     case LOGIN_FAIL:
+      return {
+        ...state,
+        userID: null
+      };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        userID: action.payload.id
+      };
+    case REGISTER_FAIL:
       return {
         ...state,
         userID: null

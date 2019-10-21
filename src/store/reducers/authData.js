@@ -3,6 +3,11 @@ import {
   LOGIN_FAIL
 } from '../actions/authDataActions/loginAction';
 
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAIL
+} from '../actions/authDataActions/signupAction';
+
 const initialState = {
   authenticated: false,
   message: '',
@@ -19,6 +24,20 @@ export const authData = (state = initialState, action) => {
         authError: false
       };
     case LOGIN_FAIL:
+      return {
+        ...state,
+        authenticated: false,
+        message: '',
+        authError: true
+      };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        authenticated: true,
+        message: '',
+        authError: false
+      };
+    case REGISTER_FAIL:
       return {
         ...state,
         authenticated: false,

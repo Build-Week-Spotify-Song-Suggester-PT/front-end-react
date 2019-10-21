@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { loginAction } from '../../store/actions/authDataActions/loginAction';
 
 //Styling Library
 import { Heading, Box, Form, FormField, Button, Text } from 'grommet';
 
-const Login = props => {
+const Login = ({ authenticated, error, userID, loginAction }) => {
+  if (authenticated) {
+    return <Redirect to={`/user/${userID}`} />;
+  }
+
   const submitHandler = e => {
-    let caseSensitiveInput = {
-      ...e.value,
-      email: e.value.email.toLowerCase()
-    };
+    loginAction(e.value);
   };
 
   return (
@@ -24,11 +26,11 @@ const Login = props => {
       <Heading alignSelf="center" responsive={true}>
         Login
       </Heading>
-      {/* {error && (
+      {error && (
         <p style={{ margin: '0 auto', color: 'red' }}>
           Username/Password incorrect. Please try again.
         </p>
-      )} */}
+      )}
       <Form onSubmit={submitHandler}>
         <FormField type="email" name="email" label="Email" required={true} />
         <FormField
@@ -48,13 +50,15 @@ const Login = props => {
   );
 };
 
-const mapStateToProps = state => {
-  console.log(state);
-
-  return {};
+const mapStateToProps = ({ authData, userData }) => {
+  return {
+    authenticated: authData.authenticated,
+    error: authData.authError,
+    userID: userData.userID
+  };
 };
 
 export default connect(
   mapStateToProps,
-  {}
+  { loginAction }
 )(Login);

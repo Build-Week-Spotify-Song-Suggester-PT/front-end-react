@@ -3,18 +3,18 @@ import { Link } from 'react-router-dom';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
 
 import { connect } from 'react-redux';
-import { loginAction } from '../../store/actions/loginAction';
 
 //Styling Library
 import { Heading, Box, Form, FormField, Button, Text } from 'grommet';
 
-const Login = ({ error }) => {
+const Login = props => {
+  console.log(props);
+
   const submitHandler = e => {
     let caseSensitiveInput = {
       ...e.value,
       email: e.value.email.toLowerCase()
     };
-    loginAction(caseSensitiveInput);
   };
 
   return (
@@ -28,11 +28,11 @@ const Login = ({ error }) => {
       <Heading alignSelf="center" responsive={true}>
         Login
       </Heading>
-      {error && (
+      {/* {error && (
         <p style={{ margin: '0 auto', color: 'red' }}>
           Username/Password incorrect. Please try again.
         </p>
-      )}
+      )} */}
       <Form onSubmit={submitHandler}>
         <FormField type="email" name="email" label="Email" required={true} />
         <FormField
@@ -53,12 +53,14 @@ const Login = ({ error }) => {
 };
 
 const mapStateToProps = state => {
+  const { auth, login } = state;
   return {
-    error: state.error
+    authenticated: auth.authenticated,
+    error: login.error
   };
 };
 
 export default connect(
   mapStateToProps,
-  { loginAction }
+  {}
 )(Login);

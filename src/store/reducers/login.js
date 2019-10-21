@@ -1,14 +1,11 @@
-import {
-    LOGIN_SUCCESS,
-    LOGIN_FAIL
-} from '../actions/loginAction';
+import { LOGIN_SUCCESS, LOGIN_FAIL } from '../actions/loginAction';
 
 const initialState = {
   message: '',
   error: false
 };
 
-export const loginReducer = (state = initialState, action) => {
+export const login = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return {

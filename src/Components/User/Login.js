@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
+import { axiosWithAuth } from '../../auth/AxiosWithAuth';
 
 //Styling Library
 import { Heading, Box, Form, FormField, Button, Text } from 'grommet';

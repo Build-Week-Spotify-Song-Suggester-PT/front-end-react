@@ -2,27 +2,19 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
 
+import { connect } from 'react-redux';
+import { loginAction } from '../../store/actions/loginAction';
+
 //Styling Library
 import { Heading, Box, Form, FormField, Button, Text } from 'grommet';
 
-const Login = props => {
-  const [error, setError] = useState(false);
-
+const Login = ({ error }) => {
   const submitHandler = e => {
     let caseSensitiveInput = {
       ...e.value,
       email: e.value.email.toLowerCase()
     };
-    setError(false);
-    axiosWithAuth()
-      .post('/accounts/login', caseSensitiveInput)
-      .then(res => {
-        localStorage.setItem('token', res.data.token);
-        props.history.push(`/user/${res.data.id}`);
-      })
-      .catch(() => {
-        setError(true);
-      });
+    loginAction(caseSensitiveInput);
   };
 
   return (
@@ -60,4 +52,13 @@ const Login = props => {
   );
 };
 
-export default Login;
+const mapStateToProps = state => {
+  return {
+    error: state.error
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { loginAction }
+)(Login);

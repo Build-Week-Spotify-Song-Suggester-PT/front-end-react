@@ -1,28 +1,33 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { axiosWithAuth } from '../../auth/AxiosWithAuth';
+import React, { Fragment, useEffect } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { signupAction } from '../../store/actions/authDataActions/signupAction';
+import { clearAuthData } from '../../store/actions/authDataActions/clearAuthData';
+
 
 //Styling Library
 import { Heading, Box, Form, FormField, Button, Text } from 'grommet';
 
-const Signup = props => {
-  const [error, setError] = useState(false);
+const Signup = ({
+  signupAction,
+  authenticated,
+  error,
+  userID,
+  clearAuthData
+}) => {
+  useEffect(() => {
+    clearAuthData();
+  }, [clearAuthData]);
+
+  if (authenticated) {
+    return <Redirect to={`/user/${userID}`} />;
+  }
 
   const submitHandler = e => {
-    let caseSensitiveInput = {
-      ...e.value,
-      email: e.value.email.toLowerCase()
-    };
-    setError(false);
-    axiosWithAuth()
-      .post('/accounts/register', caseSensitiveInput)
-      .then(res => {
-        localStorage.setItem('token', res.data.token);
-        props.history.push(`/user/${res.data.id}`);
-      })
-      .catch(() => {
-        setError(true);
-      });
+    signupAction(e.value);
   };
   return (
     <Box
@@ -63,4 +68,15 @@ const Signup = props => {
   );
 };
 
-export default Signup;
+const mapStateToProps = ({ authData, userData }) => {
+  return {
+    authenticated: authData.authenticated,
+    error: authData.registerAuthError,
+    userID: userData.userID
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { signupAction, clearAuthData }
+)(Signup);

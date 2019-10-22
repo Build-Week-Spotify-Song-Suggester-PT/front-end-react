@@ -64,7 +64,7 @@ const Login = ({
 const mapStateToProps = ({ authData, userData }) => {
   return {
     authenticated: authData.authenticated,
-    error: authData.authError,
+    error: authData.loginAuthError,
     userID: userData.userID
   };
 };

@@ -12,8 +12,8 @@ import { CLEAR_AUTH_DATA } from '../actions/authDataActions/clearAuthData';
 
 const initialState = {
   authenticated: false,
-  message: '',
-  authError: false
+  loginAuthError: false,
+  registerAuthError: false
 };
 
 export const authData = (state = initialState, action) => {
@@ -22,29 +22,29 @@ export const authData = (state = initialState, action) => {
       return {
         ...state,
         authenticated: true,
-        message: action.payload.message,
-        authError: false
+        loginAuthError: false,
+        registerAuthError: false
       };
     case LOGIN_FAIL:
       return {
         ...state,
         authenticated: false,
-        message: '',
-        authError: true
+        loginAuthError: true,
+        registerAuthError: false
       };
     case REGISTER_SUCCESS:
       return {
         ...state,
         authenticated: true,
-        message: '',
-        authError: false
+        loginAuthError: false,
+        registerAuthError: false
       };
     case REGISTER_FAIL:
       return {
         ...state,
         authenticated: false,
-        message: '',
-        authError: true
+        loginAuthError: false,
+        registerAuthError: true
       };
     case CLEAR_AUTH_DATA:
       return initialState;

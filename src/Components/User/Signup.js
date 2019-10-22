@@ -67,7 +67,7 @@ const Signup = ({
 const mapStateToProps = ({ authData, userData }) => {
   return {
     authenticated: authData.authenticated,
-    error: authData.authError,
+    error: authData.registerAuthError,
     userID: userData.userID
   };
 };

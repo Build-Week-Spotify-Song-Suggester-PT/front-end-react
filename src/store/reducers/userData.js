@@ -9,7 +9,8 @@ import {
 } from '../actions/authDataActions/signupAction';
 
 const initialState = {
-  userID: null
+  userID: null,
+  message: ''
 };
 
 export const userData = (state = initialState, action) => {

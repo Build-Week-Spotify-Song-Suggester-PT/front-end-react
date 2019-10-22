@@ -8,8 +8,11 @@ import {
   REGISTER_FAIL
 } from '../actions/authDataActions/signupAction';
 
+import { CLEAR_AUTH_DATA } from '../actions/authDataActions/clearAuthData';
+
 const initialState = {
-  userID: null
+  userID: null,
+  message: ''
 };
 
 export const userData = (state = initialState, action) => {
@@ -17,23 +20,30 @@ export const userData = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        userID: action.payload.id
+        userID: action.payload.id,
+        message: action.payload.message
       };
     case LOGIN_FAIL:
       return {
         ...state,
-        userID: null
+        userID: null,
+        message: ''
       };
     case REGISTER_SUCCESS:
+      console.log(action.payload);
       return {
         ...state,
-        userID: action.payload.id
+        userID: action.payload.id,
+        message: `Welcome, ${action.payload.name}`
       };
     case REGISTER_FAIL:
       return {
         ...state,
-        userID: null
+        userID: null,
+        message: ''
       };
+    case CLEAR_AUTH_DATA:
+      return initialState;
     default:
       return state;
   }

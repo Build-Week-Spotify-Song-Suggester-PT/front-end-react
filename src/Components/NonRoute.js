@@ -1,8 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Heading, Box, Text } from 'grommet';
 
 const NonRoute = () => {
+  const goBack = () => {
+    window.history.back();
+  };
   return (
     <Box
       height="xxlarge"
@@ -20,7 +22,17 @@ const NonRoute = () => {
         </span>
       </Text>
       <Text>
-        <Link to="/login">Click Here</Link> to go back to the login page.
+        <span
+          onClick={goBack}
+          style={{
+            color: 'purple',
+            cursor: 'pointer',
+            textDecoration: 'underline'
+          }}
+        >
+          Click here
+        </span>{' '}
+        to go back to the login page.
       </Text>
     </Box>
   );

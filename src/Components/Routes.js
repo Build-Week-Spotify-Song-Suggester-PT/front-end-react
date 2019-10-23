@@ -8,6 +8,7 @@ import Signup from './User/Signup';
 import NonRoute from './NonRoute';
 
 import Placeholder from './User/UserPlaceholder';
+import TabNav from "./Tabs/TabNav";
 
 const Routes = () => {
   return (
@@ -17,7 +18,7 @@ const Routes = () => {
       <Route path="/signup" component={Signup} />
 
       {/* Should be after user logs in */}
-      <PrivateRoute path="/user/:id" component={Placeholder} />
+      <PrivateRoute path="/user/:id" component={TabNav} />
 
       {/* Search component example */}
       <PrivateRoute path="/user/:id/search" />

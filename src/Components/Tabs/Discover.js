@@ -6,8 +6,9 @@ import {
     Text, Box, Button
   } from 'grommet';
 
-function FavList() {
+function Discover() {
 
+    const [songs, setSongs] = useState([]);
     const [favorites, setFavorites] = useState([{}]);
 
     // const handleSubmit = (values, { setStatus }) => {
@@ -18,6 +19,23 @@ function FavList() {
     //       .catch(err => console.log(err));
     //   }
 
+    const song = {
+        track_id: "5lzb11BOouSBDXxhTnTtpv",
+        number_like: 20
+
+    };
+
+    const addSong = song => {
+        const newSong = {
+            song: {song}
+            // id: song.track_id,
+            // title: song.track_name,
+            // artist: song.artist_name,
+            // length: song.duration_ms
+        }
+        
+        setFavorites([...favorites, newSong])
+    };
 
     const deleteSong = song => {
         const newArray = favorites.filter(song => {
@@ -25,30 +43,30 @@ function FavList() {
         })
     }
 
-    // useEffect(() => {
-    //     axiosWithAuth()
-    //     .get(`https://songsight-api.herokuapp.com/accounts/:id/favorites`)
-    //     .then(response => {
-    //       console.log(response);
-    //     //   setFavorites(response.data.results);
-    //     })
-    //     .catch(error => {
-    //       console.log('Server Error', error);
-    //     });
+    useEffect(() => {
+        axiosWithAuth()
+        .post(`https://songsight-api.herokuapp.com/music/similar`, song)
+        .then(response => {
+          console.log(response.data.results);
+          setSongs(response.data.results);
+        })
+        .catch(error => {
+          console.log('Server Error', error);
+        });
   
-    // }, [favorites]);
+    }, []);
 
-    // useEffect(() => {
-    //     axiosWithAuth()
-    //     .post(`https://songsight-api.herokuapp.com/music/save`, favorites)
-    //     .then(response => {
-    //       console.log(response.data.results);
-    //     })
-    //     .catch(error => {
-    //       console.log('Server Error', error);
-    //     });
+    useEffect(() => {
+        axiosWithAuth()
+        .post(`https://songsight-api.herokuapp.com/music/save`, favorites)
+        .then(response => {
+          console.log(response.data.results);
+        })
+        .catch(error => {
+          console.log('Server Error', error);
+        });
   
-    // }, [favorites]);
+    }, []);
     
 
     return (
@@ -68,17 +86,17 @@ function FavList() {
                 </TableRow>
             </TableHeader>
                 <TableBody>
-                {favorites.map(favorite => (
-                    <TableRow key={favorite.track_id}>
-                        <TableCell scope="row">
-                            <strong>{favorite.track_name}</strong>
+                {songs.map(song => (
+                    <TableRow>
+                        <TableCell scope="row" key={song.track_id}>
+                            <strong>{song.track_name}</strong>
                         </TableCell>
-                        <TableCell>{favorite.artist_name}</TableCell>
-                        <TableCell>{favorite.duration_ms/1000}</TableCell>
+                        <TableCell>{song.artist_name}</TableCell>
+                        <TableCell>{song.duration_ms/1000}</TableCell>
                         <TableCell>
                             <Button
-                                label="Delete"
-                                onClick={() => {deleteSong();}}
+                                label="Add"
+                                onClick={() => {addSong();}}
                             />
                         </TableCell>
                     </TableRow>
@@ -90,4 +108,4 @@ function FavList() {
     )
 }
 
-export default FavList;
+export default Discover;

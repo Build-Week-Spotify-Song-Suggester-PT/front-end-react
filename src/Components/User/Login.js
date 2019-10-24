@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginAction } from '../../store/actions/authDataActions/loginAction';
 import { clearAuthData } from '../../store/actions/authDataActions/clearAuthData';
+
+// Testing loading component
+import Loading from '../Loading';
 
 //Styling Library
 import { Heading, Box, Form, FormField, Button, Text } from 'grommet';
@@ -14,12 +17,25 @@ const Login = ({
   loginAction,
   clearAuthData
 }) => {
+  //Loading state set locally
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     clearAuthData();
+
+    //After one second, set loading to false (mimicking server fetch)
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, [clearAuthData]);
 
   if (authenticated) {
     return <Redirect to={`/user/${userID}`} />;
+  }
+
+  //Render loading component based on loading state
+  if (loading) {
+    return <Loading />;
   }
 
   const submitHandler = e => {

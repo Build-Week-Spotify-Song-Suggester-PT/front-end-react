@@ -30,7 +30,6 @@ export const userData = (state = initialState, action) => {
         message: ''
       };
     case REGISTER_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         userID: action.payload.id,

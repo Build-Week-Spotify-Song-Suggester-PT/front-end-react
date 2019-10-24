@@ -9,7 +9,7 @@ import {
 function Discover() {
 
     const [songs, setSongs] = useState([]);
-    const [favorites, setFavorites] = useState([{}]);
+    const [favorites, setFavorites] = useState({});
 
     // const handleSubmit = (values, { setStatus }) => {
     //     // setStatus("loading");
@@ -24,18 +24,32 @@ function Discover() {
         number_like: 20
 
     };
-
     const addSong = song => {
-        const newSong = {
-            song: {song}
-            // id: song.track_id,
-            // title: song.track_name,
-            // artist: song.artist_name,
-            // length: song.duration_ms
+        console.log(song);
+        const songValue = {
+            "track_id": `${song}`
         }
-        
-        setFavorites([...favorites, newSong])
+        console.log(songValue);
+        axiosWithAuth()
+            .post("/music/save", songValue)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch(error => {
+                console.log(error)
+            })
     };
+    // const addSong = song => {
+    //     const newSong = {
+    //         song: {song}
+    //         // id: song.track_id,
+    //         // title: song.track_name,
+    //         // artist: song.artist_name,
+    //         // length: song.duration_ms
+    //     }
+        
+    //     setFavorites([...favorites, newSong])
+    // };
 
     const deleteSong = song => {
         const newArray = favorites.filter(song => {
@@ -45,7 +59,7 @@ function Discover() {
 
     useEffect(() => {
         axiosWithAuth()
-        .post(`https://songsight-api.herokuapp.com/music/similar`, song)
+        .post(`/music/similar`, song)
         .then(response => {
           console.log(response.data.results);
           setSongs(response.data.results);
@@ -56,17 +70,17 @@ function Discover() {
   
     }, []);
 
-    useEffect(() => {
-        axiosWithAuth()
-        .post(`https://songsight-api.herokuapp.com/music/save`, favorites)
-        .then(response => {
-          console.log(response.data.results);
-        })
-        .catch(error => {
-          console.log('Server Error', error);
-        });
+    // useEffect(() => {
+    //     axiosWithAuth()
+    //     .post(`/music/save`, favorites.track_id)
+    //     .then(response => {
+    //       console.log(response.data.results);
+    //     })
+    //     .catch(error => {
+    //       console.log('Server Error', error);
+    //     });
   
-    }, []);
+    // }, [favorites]);
     
 
     return (
@@ -96,7 +110,7 @@ function Discover() {
                         <TableCell>
                             <Button
                                 label="Add"
-                                onClick={() => {addSong();}}
+                                onClick={() => addSong(song.track_id)}
                             />
                         </TableCell>
                     </TableRow>

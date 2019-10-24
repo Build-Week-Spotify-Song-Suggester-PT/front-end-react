@@ -18,20 +18,20 @@ function FavList({ info }) {
   //info.params.id === user ID from url
 
   const [favorites, setFavorites] = useState([{}]);
-
-  // const handleSubmit = (values, { setStatus }) => {
-  //     // setStatus("loading");
-  //     axios
-  //       .post("https://songsight-api.herokuapp.com/", values)
-  //       .then(res => setStatus(res.data))
-  //       .catch(err => console.log(err));
-  //   }
-
+  
   const deleteSong = song => {
     const newArray = favorites.filter(song => {
       return song.track_id;
     });
   };
+    // const handleSubmit = (values, { setStatus }) => {
+    //     // setStatus("loading");
+    //     axios
+    //       .post("https://songsight-api.herokuapp.com/", values)
+    //       .then(res => setStatus(res.data))
+    //       .catch(err => console.log(err));
+    //   }
+    console.log(props);
 
   // useEffect(() => {
   //     axiosWithAuth()
@@ -43,8 +43,8 @@ function FavList({ info }) {
   //     .catch(error => {
   //       console.log('Server Error', error);
   //     });
-
   // }, [favorites]);
+
 
   // useEffect(() => {
   //     axiosWithAuth()

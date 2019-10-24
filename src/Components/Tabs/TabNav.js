@@ -5,7 +5,7 @@ import Discover from './Discover';
 import FavList from './FavList';
 import Welcome from '../User/WelcomeMessage';
 
-const TabNav = () => {
+const TabNav = ({ match }) => {
   return (
     <Fragment>
       <Welcome />
@@ -13,7 +13,7 @@ const TabNav = () => {
         <Tab title="Saved Songs">
           <Box pad="medium">
             Head on over to Discover to add new songs!
-            <FavList />
+            <FavList info={match} />
           </Box>
         </Tab>
         <Tab title="Discover">

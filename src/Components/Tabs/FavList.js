@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
-import { connect } from 'react-redux';
 import Dropdown from './Dropdown';
 import {
   Table,
@@ -14,9 +13,11 @@ import {
 } from 'grommet';
 import { userData } from '../../store/reducers/userData';
 
-function FavList({ userID }) {
+function FavList({ info }) {
+  console.log(info);
+  //info.params.id === user ID from url
+
   const [favorites, setFavorites] = useState([{}]);
-  console.log(userID);
 
   // const handleSubmit = (values, { setStatus }) => {
   //     // setStatus("loading");
@@ -97,13 +98,4 @@ function FavList({ userID }) {
   );
 }
 
-const mapStateToProps = ({ userData }) => {
-  return {
-    userID: userData.userID
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  {}
-)(FavList);
+export default FavList;

@@ -25,18 +25,18 @@ function FavList() {
         })
     }
 
-    // useEffect(() => {
-    //     axiosWithAuth()
-    //     .get(`https://songsight-api.herokuapp.com/accounts/:id/favorites`)
-    //     .then(response => {
-    //       console.log(response);
-    //     //   setFavorites(response.data.results);
-    //     })
-    //     .catch(error => {
-    //       console.log('Server Error', error);
-    //     });
+    useEffect(() => {
+        axiosWithAuth()
+        .get(`/accounts/:id/favorites`)
+        .then(response => {
+          console.log(response);
+        //   setFavorites(response.data.results);
+        })
+        .catch(error => {
+          console.log('Server Error', error);
+        });
   
-    // }, [favorites]);
+    }, [favorites]);
 
     // useEffect(() => {
     //     axiosWithAuth()

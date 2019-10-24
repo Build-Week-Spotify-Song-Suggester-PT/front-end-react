@@ -32,7 +32,7 @@ const NonRoute = () => {
         >
           Click here
         </span>{' '}
-        to go back to the login page.
+        to go back to the last page you were on.
       </Text>
     </Box>
   );

@@ -6,7 +6,7 @@ import {
     Text, Box, Button
   } from 'grommet';
 
-function FavList() {
+function FavList(props) {
 
     const [favorites, setFavorites] = useState([{}]);
 
@@ -17,7 +17,7 @@ function FavList() {
     //       .then(res => setStatus(res.data))
     //       .catch(err => console.log(err));
     //   }
-
+    console.log(props);
 
     const deleteSong = song => {
         const newArray = favorites.filter(song => {
@@ -27,7 +27,7 @@ function FavList() {
 
     // useEffect(() => {
     //     axiosWithAuth()
-    //     .get(`https://songsight-api.herokuapp.com/accounts/:id/favorites`)
+    //     .get(`/accounts/:id/favorites`)
     //     .then(response => {
     //       console.log(response);
     //     //   setFavorites(response.data.results);

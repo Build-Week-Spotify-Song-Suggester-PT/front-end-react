@@ -3,6 +3,7 @@ import { Heading, Box } from 'grommet';
 
 const Nav = () => {
   return (
+    
     <Box background="linear-gradient(90deg, #C37D92, #7B4B94, #C37D92);">
       <Heading
         responsive={true}
@@ -12,6 +13,8 @@ const Nav = () => {
         SongSight
       </Heading>
     </Box>
+      
+    
   );
 };
 

@@ -15,7 +15,7 @@ const MyProfile = ({
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 500);
   }, []);
 
   //Message to be returned if a user successfully updates information

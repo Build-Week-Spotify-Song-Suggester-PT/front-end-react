@@ -44,7 +44,6 @@ const Login = ({
 
   return (
     <Box
-      height="xxlarge"
       responsive={true}
       width={{ max: '700px' }}
       margin={{ horizontal: 'auto' }}

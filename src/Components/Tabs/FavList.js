@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
-import Dropdown from './Dropdown';
+
 import {
   Table,
   TableBody,
   TableCell,
   TableHeader,
   TableRow,
-  Text,
-  Box,
   Button
 } from 'grommet';
 
 function FavList({ info }) {
-  //info.params.id === user ID from url
 
   const [favorites, setFavorites] = useState([{}]);
 
@@ -22,13 +19,6 @@ function FavList({ info }) {
       return song.track_id;
     });
   };
-  // const handleSubmit = (values, { setStatus }) => {
-  //     // setStatus("loading");
-  //     axios
-  //       .post("https://songsight-api.herokuapp.com/", values)
-  //       .then(res => setStatus(res.data))
-  //       .catch(err => console.log(err));
-  //   }
 
   const { id } = info.params;
   useEffect(() => {
@@ -43,23 +33,9 @@ function FavList({ info }) {
       });
   }, [id]);
 
-  // useEffect(() => {
-  //     axiosWithAuth()
-  //     .post(`https://songsight-api.herokuapp.com/music/save`, favorites)
-  //     .then(response => {
-  //       console.log(response.data.results);
-  //     })
-  //     .catch(error => {
-  //       console.log('Server Error', error);
-  //     });
-
-  // }, [favorites]);
-
-  // className="suggested-song-list"
   console.log('this is the list', favorites);
   return (
     <Table>
-      {/* <Dropdown /> */}
       <TableHeader>
         <TableRow>
           <TableCell scope="col" border="bottom">
@@ -87,7 +63,6 @@ function FavList({ info }) {
           </TableRow>
         ))}
       </TableBody>
-      {/* <SongCard key={song.track_id} song={song} /> */}
     </Table>
   );
 }

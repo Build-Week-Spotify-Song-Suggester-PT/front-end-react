@@ -55,8 +55,9 @@ function FavList({ info }) {
 
   // }, [favorites]);
 
+  // className="suggested-song-list"
   return (
-    <Box className="suggested-song-list">
+    <Box direction="column">
       {/* <Dropdown /> */}
       <TableHeader>
         <TableRow>

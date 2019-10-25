@@ -7,7 +7,6 @@ import Login from './User/Login';
 import Signup from './User/Signup';
 import NonRoute from './NonRoute';
 
-import Placeholder from './User/UserPlaceholder';
 import TabNav from "./Tabs/TabNav";
 
 const Routes = () => {

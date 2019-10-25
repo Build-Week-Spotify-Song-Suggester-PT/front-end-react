@@ -7,7 +7,7 @@ import Welcome from '../User/WelcomeMessage';
 
 const TabNav = ({ match }) => {
   return (
-    <Fragment>
+    <Box alignContent="center">
       <Welcome />
       <Tabs>
         <Tab title="Saved Songs">
@@ -27,7 +27,7 @@ const TabNav = ({ match }) => {
           </Box>
         </Tab>
       </Tabs>
-    </Fragment>
+    </Box>
   );
 };
 

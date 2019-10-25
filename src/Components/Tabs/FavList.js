@@ -11,40 +11,37 @@ import {
   Box,
   Button
 } from 'grommet';
-import { userData } from '../../store/reducers/userData';
 
 function FavList({ info }) {
-  console.log(info);
   //info.params.id === user ID from url
 
   const [favorites, setFavorites] = useState([{}]);
-  
+
   const deleteSong = song => {
     const newArray = favorites.filter(song => {
       return song.track_id;
     });
   };
-    // const handleSubmit = (values, { setStatus }) => {
-    //     // setStatus("loading");
-    //     axios
-    //       .post("https://songsight-api.herokuapp.com/", values)
-    //       .then(res => setStatus(res.data))
-    //       .catch(err => console.log(err));
-    //   }
-    console.log(props);
+  // const handleSubmit = (values, { setStatus }) => {
+  //     // setStatus("loading");
+  //     axios
+  //       .post("https://songsight-api.herokuapp.com/", values)
+  //       .then(res => setStatus(res.data))
+  //       .catch(err => console.log(err));
+  //   }
 
-  // useEffect(() => {
-  //     axiosWithAuth()
-  //     .get(`https://songsight-api.herokuapp.com/accounts/:id/favorites`)
-  //     .then(response => {
-  //       console.log(response);
-  //     //   setFavorites(response.data.results);
-  //     })
-  //     .catch(error => {
-  //       console.log('Server Error', error);
-  //     });
-  // }, [favorites]);
-
+  useEffect(() => {
+    const { id } = info.params;
+    axiosWithAuth()
+      .get(`/accounts/${id}/favorites`)
+      .then(response => {
+        console.log(response);
+        //   setFavorites(response.data.results);
+      })
+      .catch(error => {
+        console.log('Server Error', error);
+      });
+  }, []);
 
   // useEffect(() => {
   //     axiosWithAuth()
@@ -75,20 +72,15 @@ function FavList({ info }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {favorites.map(favorite => (
-          <TableRow key={favorite.track_id}>
+        {favorites.map((favorite, id) => (
+          <TableRow key={id}>
             <TableCell scope="row">
               <strong>{favorite.track_name}</strong>
             </TableCell>
             <TableCell>{favorite.artist_name}</TableCell>
             <TableCell>{favorite.duration_ms / 1000}</TableCell>
             <TableCell>
-              <Button
-                label="Delete"
-                onClick={() => {
-                  deleteSong();
-                }}
-              />
+              <Button label="Delete" onClick={() => deleteSong()} />
             </TableCell>
           </TableRow>
         ))}

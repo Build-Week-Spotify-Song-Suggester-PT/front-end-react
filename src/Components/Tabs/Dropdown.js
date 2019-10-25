@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Select, Box, FormField, Form, Button } from "grommet";
+import { Select, FormField, Form, Button } from "grommet";
 import { axiosWithAuth } from "../../Auth/AxiosWithAuth";
 
 
@@ -30,21 +30,21 @@ function Dropdown() {
   
     // }, [feature]);
     
-    const handleChange = (event) => {
-      event.preventDefault();
-      setFeature(event.value);
-    }
+    // const handleChange = (event) => {
+    //   event.preventDefault();
+    //   setFeature(event.value);
+    // }
   
-    const handleSubmit = ({ value }) => {
-      console.log('submitting...');
-      axiosWithAuth
-        .post("", value)
-        .then(response => {
-            console.log(response.data.results);
-            setSongs(response.data.results);
-        })
-        .catch(error => console.log(error));
-    };
+    // const handleSubmit = ({ value }) => {
+    //   console.log('submitting...');
+    //   axiosWithAuth
+    //     .post("", value)
+    //     .then(response => {
+    //         console.log(response.data.results);
+    //         setSongs(response.data.results);
+    //     })
+    //     .catch(error => console.log(error));
+    // };
         
     return (
         <Form onSubmit={handleSubmit}>
@@ -64,25 +64,6 @@ function Dropdown() {
             />
             <Button type="submit" label="Submit" primary={true} />
         </Form>
-        // <Box>
-        //     <FormField label="Feature">
-        //         <Select
-        //             options={['recommended', 'accousticness', 'danceability', 'energy', 'instrumentalness', 'liveness', 'loudness', 'speechiness', 'tempo']}
-        //             value={feature}
-        //             onChange={handleChange}
-        //         />
-        //     </FormField>
-        //     <FormField lable="Level">
-        //         <Select
-        //             options={['low', 'medium', 'high']}
-        //             value={level}
-        //             onChange={handleChange}
-        //         />
-        //     </FormField>
-            
-            
-        // </Box>
-        
     );
     
 }

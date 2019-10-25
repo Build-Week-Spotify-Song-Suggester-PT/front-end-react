@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
-import Dropdown from './Dropdown';
 import {
   Table,
   TableBody,
@@ -16,20 +15,7 @@ function FavList({ info }) {
   //info.params.id === user ID from url
 
   const [favorites, setFavorites] = useState([{}]);
-
-  const deleteSong = song => {
-    const newArray = favorites.filter(song => {
-      return song.track_id;
-    });
-  };
-  // const handleSubmit = (values, { setStatus }) => {
-  //     // setStatus("loading");
-  //     axios
-  //       .post("https://songsight-api.herokuapp.com/", values)
-  //       .then(res => setStatus(res.data))
-  //       .catch(err => console.log(err));
-  //   }
-
+  
   const { id } = info.params;
   useEffect(() => {
     axiosWithAuth()
@@ -44,22 +30,44 @@ function FavList({ info }) {
   }, [id]);
 
   // useEffect(() => {
-  //     axiosWithAuth()
-  //     .post(`https://songsight-api.herokuapp.com/music/save`, favorites)
+  //   axiosWithAuth()
+  //     .get(`/accounts/${id}/favorites`)
   //     .then(response => {
-  //       console.log(response.data.results);
+  //       console.log('this is in the call', response);
+  //       setFavorites(response.data);
   //     })
   //     .catch(error => {
   //       console.log('Server Error', error);
   //     });
+  // }, []);
 
-  // }, [favorites]);
+  const removeSong = song => {
+    console.log(song);
+    const songValue = {
+      track_id: `${song}`
+    };
+    console.log(songValue);
+
+    const newArray = favorites.filter(favorite=> {
+      return favorite.track_id !== songValue.track_id;
+    });
+    console.log(newArray)
+
+    axiosWithAuth()
+      .delete(`/accounts/${id}/favorites/${song}`)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+      setFavorites(newArray);
+  };
 
   // className="suggested-song-list"
   console.log('this is the list', favorites);
   return (
     <Table>
-      {/* <Dropdown /> */}
       <TableHeader>
         <TableRow>
           <TableCell scope="col" border="bottom">
@@ -82,12 +90,11 @@ function FavList({ info }) {
             <TableCell>{favorite.artist_name}</TableCell>
             <TableCell>{favorite.duration_ms / 1000}</TableCell>
             <TableCell>
-              <Button label="Delete" onClick={() => deleteSong()} />
+              <Button label="Remove" onClick={() => removeSong(favorite.track_id)} />
             </TableCell>
           </TableRow>
         ))}
       </TableBody>
-      {/* <SongCard key={song.track_id} song={song} /> */}
     </Table>
   );
 }

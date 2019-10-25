@@ -30,18 +30,18 @@ function FavList({ info }) {
   //       .catch(err => console.log(err));
   //   }
 
+  const { id } = info.params;
   useEffect(() => {
-    const { id } = info.params;
     axiosWithAuth()
       .get(`/accounts/${id}/favorites`)
       .then(response => {
-        console.log(response);
-        //   setFavorites(response.data.results);
+        console.log('this is in the call', response);
+        setFavorites(response.data);
       })
       .catch(error => {
         console.log('Server Error', error);
       });
-  }, []);
+  }, [id]);
 
   // useEffect(() => {
   //     axiosWithAuth()
@@ -56,6 +56,7 @@ function FavList({ info }) {
   // }, [favorites]);
 
   // className="suggested-song-list"
+  console.log('this is the list', favorites);
   return (
     <Table>
       {/* <Dropdown /> */}

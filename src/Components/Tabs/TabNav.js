@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Box, Tabs, Tab } from 'grommet';
 import SuggestedSongs from './SuggestedSongs';
 import Discover from './Discover';

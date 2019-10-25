@@ -1,28 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
+import Loading from '../Loading';
+
 import {
   Table,
   TableBody,
   TableCell,
   TableHeader,
   TableRow,
-  Text,
-  Box,
   Button
 } from 'grommet';
 
 function FavList({ info }) {
-  //info.params.id === user ID from url
 
   const [favorites, setFavorites] = useState([{}]);
-  
+  const [loading, setLoading] = useState(true);
+
+  const deleteSong = song => {
+    const newArray = favorites.filter(song => {
+      return song.track_id;
+    });
+  };
+
   const { id } = info.params;
   useEffect(() => {
     axiosWithAuth()
       .get(`/accounts/${id}/favorites`)
       .then(response => {
-        console.log('this is in the call', response);
         setFavorites(response.data);
+        setLoading(false);
       })
       .catch(error => {
         console.log('Server Error', error);
@@ -63,9 +69,13 @@ function FavList({ info }) {
       });
       setFavorites(newArray);
   };
+  
+  if (loading) {
+    return <Loading />;
+  }
 
-  // className="suggested-song-list"
   console.log('this is the list', favorites);
+
   return (
     <Table>
       <TableHeader>

@@ -6,19 +6,30 @@ import {
   TableCell,
   TableHeader,
   TableRow,
-  Text,
-  Box,
   Button
 } from 'grommet';
 
 function Discover() {
   const [songs, setSongs] = useState([]);
-  const [favorites, setFavorites] = useState({});
 
-  const song = {
-    "track_id": '5lzb11BOouSBDXxhTnTtpv',
-    "number_like": 20
-  };
+  
+  useEffect(() => {
+    const initialSong = {
+      track_id: '5lzb11BOouSBDXxhTnTtpv',
+      number_like: 20
+    };
+    
+    axiosWithAuth()
+      .post('/music/similar', initialSong)
+      .then(response => {
+        console.log(response.data.results);
+        setSongs(response.data.results);
+      })
+      .catch(error => {
+        console.log('Server Error', error);
+      });
+  }, []);
+
   const addSong = song => {
     console.log(song);
     const songValue = {
@@ -34,18 +45,6 @@ function Discover() {
         console.log(error);
       });
   };
-
-  useEffect(() => {
-    axiosWithAuth()
-      .post(`/music/similar`, song)
-      .then(response => {
-        console.log(response.data.results);
-        setSongs(response.data.results);
-      })
-      .catch(error => {
-        console.log('Server Error', error);
-      });
-  }, []);
 
   // className="suggested-song-list"
   return (

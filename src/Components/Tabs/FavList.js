@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
 import Loading from '../Loading';
+
 import {
   Table,
   TableBody,
@@ -11,7 +12,6 @@ import {
 } from 'grommet';
 
 function FavList({ info }) {
-  //info.params.id === user ID from url
 
   const [favorites, setFavorites] = useState([{}]);
   const [loading, setLoading] = useState(true);
@@ -38,6 +38,8 @@ function FavList({ info }) {
   if (loading) {
     return <Loading />;
   }
+
+  console.log('this is the list', favorites);
 
   return (
     <Table>

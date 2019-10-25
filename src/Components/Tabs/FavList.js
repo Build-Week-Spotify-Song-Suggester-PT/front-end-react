@@ -12,15 +12,8 @@ import {
 } from 'grommet';
 
 function FavList({ info }) {
-
   const [favorites, setFavorites] = useState([{}]);
   const [loading, setLoading] = useState(true);
-
-  const deleteSong = song => {
-    const newArray = favorites.filter(song => {
-      return song.track_id;
-    });
-  };
 
   const { id } = info.params;
   useEffect(() => {
@@ -35,18 +28,6 @@ function FavList({ info }) {
       });
   }, [id]);
 
-  // useEffect(() => {
-  //   axiosWithAuth()
-  //     .get(`/accounts/${id}/favorites`)
-  //     .then(response => {
-  //       console.log('this is in the call', response);
-  //       setFavorites(response.data);
-  //     })
-  //     .catch(error => {
-  //       console.log('Server Error', error);
-  //     });
-  // }, []);
-
   const removeSong = song => {
     console.log(song);
     const songValue = {
@@ -54,10 +35,10 @@ function FavList({ info }) {
     };
     console.log(songValue);
 
-    const newArray = favorites.filter(favorite=> {
+    const newArray = favorites.filter(favorite => {
       return favorite.track_id !== songValue.track_id;
     });
-    console.log(newArray)
+    console.log(newArray);
 
     axiosWithAuth()
       .delete(`/accounts/${id}/favorites/${song}`)
@@ -67,14 +48,12 @@ function FavList({ info }) {
       .catch(error => {
         console.log(error);
       });
-      setFavorites(newArray);
+    setFavorites(newArray);
   };
-  
+
   if (loading) {
     return <Loading />;
   }
-
-  console.log('this is the list', favorites);
 
   return (
     <Table>
@@ -100,7 +79,10 @@ function FavList({ info }) {
             <TableCell>{favorite.artist_name}</TableCell>
             <TableCell>{favorite.duration_ms / 1000}</TableCell>
             <TableCell>
-              <Button label="Remove" onClick={() => removeSong(favorite.track_id)} />
+              <Button
+                label="Remove"
+                onClick={() => removeSong(favorite.track_id)}
+              />
             </TableCell>
           </TableRow>
         ))}

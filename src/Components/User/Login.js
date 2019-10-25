@@ -3,8 +3,6 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginAction } from '../../store/actions/authDataActions/loginAction';
 import { clearAuthData } from '../../store/actions/authDataActions/clearAuthData';
-
-// Testing loading component
 import Loading from '../Loading';
 
 //Styling Library

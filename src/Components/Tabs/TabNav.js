@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Tabs, Tab } from 'grommet';
-import SuggestedSongs from './SuggestedSongs';
+import MyProfile from './MyProfile';
 import Discover from './Discover';
 import FavList from './FavList';
 import Welcome from '../User/WelcomeMessage';
@@ -21,9 +21,9 @@ const TabNav = ({ match }) => {
             <Discover />
           </Box>
         </Tab>
-        <Tab title="Suggested Songs">
+        <Tab title="My Profile">
           <Box pad="medium">
-            <SuggestedSongs />
+            <MyProfile />
           </Box>
         </Tab>
       </Tabs>

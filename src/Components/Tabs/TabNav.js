@@ -5,7 +5,7 @@ import Discover from './Discover';
 import FavList from './FavList';
 import Welcome from '../User/WelcomeMessage';
 
-const TabNav = ({ match }) => {
+const TabNav = ({ match, history }) => {
   return (
     <Box alignContent="center">
       <Welcome />
@@ -23,7 +23,7 @@ const TabNav = ({ match }) => {
         </Tab>
         <Tab title="My Profile">
           <Box pad="medium">
-            <MyProfile />
+            <MyProfile history={history} match={match} />
           </Box>
         </Tab>
       </Tabs>

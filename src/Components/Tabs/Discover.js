@@ -1,33 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
-import Dropdown from './Dropdown';
 import {
   Table,
   TableBody,
   TableCell,
   TableHeader,
   TableRow,
-  Text,
-  Box,
   Button
 } from 'grommet';
 
 function Discover() {
   const [songs, setSongs] = useState([]);
-  const [favorites, setFavorites] = useState({});
 
-  // const handleSubmit = (values, { setStatus }) => {
-  //     // setStatus("loading");
-  //     axios
-  //       .post("https://songsight-api.herokuapp.com/", values)
-  //       .then(res => setStatus(res.data))
-  //       .catch(err => console.log(err));
-  //   }
-
-  const song = {
+  const initialSong = {
     track_id: '5lzb11BOouSBDXxhTnTtpv',
     number_like: 20
   };
+
+  useEffect(() => {
+    axiosWithAuth()
+      .post('/music/similar', initialSong)
+      .then(response => {
+        console.log(response.data.results);
+        setSongs(response.data.results);
+      })
+      .catch(error => {
+        console.log('Server Error', error);
+      });
+  }, [initialSong]);
+
   const addSong = song => {
     console.log(song);
     const songValue = {
@@ -43,47 +44,6 @@ function Discover() {
         console.log(error);
       });
   };
-  // const addSong = song => {
-  //     const newSong = {
-  //         song: {song}
-  //         // id: song.track_id,
-  //         // title: song.track_name,
-  //         // artist: song.artist_name,
-  //         // length: song.duration_ms
-  //     }
-
-  //     setFavorites([...favorites, newSong])
-  // };
-
-  const deleteSong = song => {
-    const newArray = favorites.filter(song => {
-      return song.track_id;
-    });
-  };
-
-  useEffect(() => {
-    axiosWithAuth()
-      .post(`/music/similar`, song)
-      .then(response => {
-        console.log(response.data.results);
-        setSongs(response.data.results);
-      })
-      .catch(error => {
-        console.log('Server Error', error);
-      });
-  }, []);
-
-  // useEffect(() => {
-  //     axiosWithAuth()
-  //     .post(`/music/save`, favorites.track_id)
-  //     .then(response => {
-  //       console.log(response.data.results);
-  //     })
-  //     .catch(error => {
-  //       console.log('Server Error', error);
-  //     });
-
-  // }, [favorites]);
 
   // className="suggested-song-list"
   return (

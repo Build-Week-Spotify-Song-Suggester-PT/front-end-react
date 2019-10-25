@@ -35,6 +35,41 @@ function FavList({ info }) {
       });
   }, [id]);
 
+  // useEffect(() => {
+  //   axiosWithAuth()
+  //     .get(`/accounts/${id}/favorites`)
+  //     .then(response => {
+  //       console.log('this is in the call', response);
+  //       setFavorites(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.log('Server Error', error);
+  //     });
+  // }, []);
+
+  const removeSong = song => {
+    console.log(song);
+    const songValue = {
+      track_id: `${song}`
+    };
+    console.log(songValue);
+
+    const newArray = favorites.filter(favorite=> {
+      return favorite.track_id !== songValue.track_id;
+    });
+    console.log(newArray)
+
+    axiosWithAuth()
+      .delete(`/accounts/${id}/favorites/${song}`)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+      setFavorites(newArray);
+  };
+  
   if (loading) {
     return <Loading />;
   }
@@ -65,7 +100,7 @@ function FavList({ info }) {
             <TableCell>{favorite.artist_name}</TableCell>
             <TableCell>{favorite.duration_ms / 1000}</TableCell>
             <TableCell>
-              <Button label="Delete" onClick={() => deleteSong()} />
+              <Button label="Remove" onClick={() => removeSong(favorite.track_id)} />
             </TableCell>
           </TableRow>
         ))}

@@ -12,12 +12,13 @@ import {
 function Discover() {
   const [songs, setSongs] = useState([]);
 
-  const initialSong = {
-    track_id: '5lzb11BOouSBDXxhTnTtpv',
-    number_like: 20
-  };
-
+  
   useEffect(() => {
+    const initialSong = {
+      track_id: '5lzb11BOouSBDXxhTnTtpv',
+      number_like: 20
+    };
+    
     axiosWithAuth()
       .post('/music/similar', initialSong)
       .then(response => {
@@ -27,7 +28,7 @@ function Discover() {
       .catch(error => {
         console.log('Server Error', error);
       });
-  }, [initialSong]);
+  }, []);
 
   const addSong = song => {
     console.log(song);
@@ -48,7 +49,6 @@ function Discover() {
   // className="suggested-song-list"
   return (
     <Table>
-      {/* <Dropdown /> */}
       <TableHeader>
         <TableRow>
           <TableCell scope="col" border="bottom">
@@ -76,7 +76,6 @@ function Discover() {
           </TableRow>
         ))}
       </TableBody>
-      {/* <SongCard key={song.track_id} song={song} /> */}
     </Table>
   );
 }

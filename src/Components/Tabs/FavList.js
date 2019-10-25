@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
+import Loading from '../Loading';
 
 import {
   Table,
@@ -13,6 +14,7 @@ import {
 function FavList({ info }) {
 
   const [favorites, setFavorites] = useState([{}]);
+  const [loading, setLoading] = useState(true);
 
   const deleteSong = song => {
     const newArray = favorites.filter(song => {
@@ -25,15 +27,20 @@ function FavList({ info }) {
     axiosWithAuth()
       .get(`/accounts/${id}/favorites`)
       .then(response => {
-        console.log('this is in the call', response);
         setFavorites(response.data);
+        setLoading(false);
       })
       .catch(error => {
         console.log('Server Error', error);
       });
   }, [id]);
 
+  if (loading) {
+    return <Loading />;
+  }
+
   console.log('this is the list', favorites);
+
   return (
     <Table>
       <TableHeader>

@@ -57,7 +57,7 @@ function FavList({ info }) {
 
   // className="suggested-song-list"
   return (
-    <Box direction="column">
+    <Table>
       {/* <Dropdown /> */}
       <TableHeader>
         <TableRow>
@@ -87,7 +87,7 @@ function FavList({ info }) {
         ))}
       </TableBody>
       {/* <SongCard key={song.track_id} song={song} /> */}
-    </Box>
+    </Table>
   );
 }
 

@@ -1,8 +1,9 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signupAction } from '../../store/actions/authDataActions/signupAction';
 import { clearAuthData } from '../../store/actions/authDataActions/clearAuthData';
+import Loading from '../Loading';
 
 //Styling Library
 import { Heading, Box, Form, FormField, Button, Text } from 'grommet';
@@ -14,6 +15,9 @@ const Signup = ({
   userID,
   clearAuthData
 }) => {
+  //Loading state set locally
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     clearAuthData();
   }, [clearAuthData]);
@@ -22,8 +26,14 @@ const Signup = ({
     return <Redirect to={`/user/${userID}`} />;
   }
 
+  //Render loading component based on if loading state is true and errors are false
+  if (!error && loading) {
+    return <Loading />;
+  }
+
   const submitHandler = e => {
     signupAction(e.value);
+    setLoading(true);
   };
   return (
     <Box

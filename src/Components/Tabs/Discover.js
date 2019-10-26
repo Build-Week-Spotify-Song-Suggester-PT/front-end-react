@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
+import Loading from '../Loading';
 import {
   Table,
   TableBody,
@@ -11,24 +12,29 @@ import {
 
 function Discover() {
   const [songs, setSongs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  
   useEffect(() => {
     const initialSong = {
       track_id: '5lzb11BOouSBDXxhTnTtpv',
       number_like: 20
     };
-    
+
     axiosWithAuth()
       .post('/music/similar', initialSong)
       .then(response => {
         console.log(response.data.results);
         setSongs(response.data.results);
+        setLoading(false);
       })
       .catch(error => {
         console.log('Server Error', error);
       });
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   const addSong = song => {
     console.log(song);

@@ -37,7 +37,7 @@ function Dropdown() {
   
     const handleSubmit = ({ value }) => {
       console.log('submitting...');
-      axiosWithAuth
+      axiosWithAuth()
         .post("", value)
         .then(response => {
             console.log(response.data.results);

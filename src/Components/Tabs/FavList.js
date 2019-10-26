@@ -9,7 +9,8 @@ import {
   TableRow,
   Text,
   Box,
-  Button
+  Button,
+  Heading, DataTable
 } from 'grommet';
 
 function FavList({ info }) {
@@ -57,39 +58,45 @@ function FavList({ info }) {
 
   // className="suggested-song-list"
   console.log('this is the list', favorites);
+  const columns = [
+        
+    {
+      property: 'Artist',
+      header: 'Artist',
+    },
+    {
+      property: 'Song',
+      header: 'Song',
+    },
+    {
+        property: 'Duration',
+        header: 'Duration',
+    },
+    
+  
+    
+  ];
+  
+  const DATA = favorites.map(song => ({
+    Key: song.track_id,
+    Artist: song.artist_name,
+    Song: song.track_name,
+    Duration: song.duration_ms / 1000 + ' ms',
+  }));
+
   return (
-    <Table>
-      {/* <Dropdown /> */}
-      <TableHeader>
-        <TableRow>
-          <TableCell scope="col" border="bottom">
-            Song Title
-          </TableCell>
-          <TableCell scope="col" border="bottom">
-            Artist Name
-          </TableCell>
-          <TableCell scope="col" border="bottom">
-            Duration
-          </TableCell>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {favorites.map((favorite, id) => (
-          <TableRow key={id}>
-            <TableCell scope="row">
-              <strong>{favorite.track_name}</strong>
-            </TableCell>
-            <TableCell>{favorite.artist_name}</TableCell>
-            <TableCell>{favorite.duration_ms / 1000}</TableCell>
-            <TableCell>
-              <Button label="Delete" onClick={() => deleteSong()} />
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-      {/* <SongCard key={song.track_id} song={song} /> */}
-    </Table>
-  );
+  <Box margin='0 auto' width='100%' height='1050px' responsive='true' background={{ color:'white'
+}}>
+    <Box align='center' margin='5px auto' width='100%' responsive='true' >
+      <Heading color='white' margin='auto'>My Music</Heading>
+      <DataTable  sortable='false' size='medium' columns={columns} data={DATA} background={{
+      header: "dark-4",
+      body: ["neutral-3", "neutral-2"],
+      footer: "dark-3"
+      }} />
+    </Box>
+  </Box>
+  )  
 }
 
 export default FavList;

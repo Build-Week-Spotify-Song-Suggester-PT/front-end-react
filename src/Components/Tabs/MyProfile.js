@@ -13,9 +13,13 @@ const MyProfile = ({
   //UI delay for loading component
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setLoading(false);
     }, 500);
+
+    return () => {
+      clearTimeout(timeout);
+    };
   }, []);
 
   //Message to be returned if a user successfully updates information
@@ -93,12 +97,17 @@ const MyProfile = ({
         alignContent="center"
         border="horizontal"
       >
-        <Button type="button" label="Log Out" margin="small" onClick={logOut} />
+        <Button
+          type="button"
+          label="Log Out"
+          margin={{ vertical: '10px' }}
+          onClick={logOut}
+        />
         <Button
           type="button"
           label="Delete My Account"
-          margin="small"
           onClick={deleteAccount}
+          margin={{ vertical: '10px' }}
         />
       </Box>
     </div>

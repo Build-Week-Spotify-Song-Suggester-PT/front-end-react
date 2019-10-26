@@ -29,21 +29,18 @@ function FavList({ info }) {
   }, [id]);
 
   const removeSong = song => {
-    console.log(song);
     const songValue = {
       track_id: `${song}`
     };
-    console.log(songValue);
 
     const newArray = favorites.filter(favorite => {
       return favorite.track_id !== songValue.track_id;
     });
-    console.log(newArray);
 
     axiosWithAuth()
       .delete(`/accounts/${id}/favorites/${song}`)
       .then(res => {
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log(error);

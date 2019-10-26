@@ -23,7 +23,6 @@ function Discover() {
     axiosWithAuth()
       .post('/music/similar', initialSong)
       .then(response => {
-        console.log(response.data.results);
         setSongs(response.data.results);
         setLoading(false);
       })
@@ -37,15 +36,13 @@ function Discover() {
   }
 
   const addSong = song => {
-    console.log(song);
     const songValue = {
       track_id: `${song}`
     };
-    console.log(songValue);
     axiosWithAuth()
       .post('/music/save', songValue)
       .then(res => {
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log(error);

@@ -31,10 +31,6 @@ function Discover() {
       });
   }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   const addSong = song => {
     const songValue = {
       track_id: `${song}`
@@ -49,9 +45,31 @@ function Discover() {
       });
   };
 
-  // className="suggested-song-list"
+  const getSimilar = song => {
+    setLoading(true);
+    const songValue = {
+      track_id: `${song}`,
+      number_like: 20
+    };
+
+    axiosWithAuth()
+      .post('/music/similar', songValue)
+      .then(response => {
+        console.log(response);
+        setSongs(response.data.results);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.log('Server Error', error);
+      });
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
-    <Table>
+    <Table margin={{ horizontal: 'auto' }}>
       <TableHeader>
         <TableRow>
           <TableCell scope="col" border="bottom">
@@ -74,7 +92,16 @@ function Discover() {
             <TableCell>{song.artist_name}</TableCell>
             <TableCell>{song.duration_ms / 1000}</TableCell>
             <TableCell>
-              <Button label="Add" onClick={() => addSong(song.track_id)} />
+              <Button
+                margin="xsmall"
+                label="Add Song"
+                onClick={() => addSong(song.track_id)}
+              />
+              <Button
+                margin="xsmall"
+                label="Get Similar"
+                onClick={() => getSimilar(song.track_id)}
+              />
             </TableCell>
           </TableRow>
         ))}

@@ -12,7 +12,6 @@ const TabNav = ({ match, history }) => {
       <Tabs>
         <Tab title="Saved Songs">
           <Box pad="medium">
-            Head on over to Discover to add new songs!
             <FavList info={match} />
           </Box>
         </Tab>

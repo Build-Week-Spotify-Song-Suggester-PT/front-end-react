@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
 import Loading from '../Loading';
 
@@ -8,12 +8,15 @@ import {
   TableCell,
   TableHeader,
   TableRow,
-  Button
+  Button,
+  Box,
+  Heading
 } from 'grommet';
 
 function FavList({ info }) {
   const [favorites, setFavorites] = useState([{}]);
   const [loading, setLoading] = useState(true);
+  const [deleteMessage, setDeleteMessage] = useState('');
 
   const { id } = info.params;
   useEffect(() => {
@@ -41,6 +44,10 @@ function FavList({ info }) {
       .delete(`/accounts/${id}/favorites/${song}`)
       .then(res => {
         // console.log(res);
+        setDeleteMessage(res.data.message);
+        setTimeout(() => {
+          setDeleteMessage('');
+        }, 3000);
       })
       .catch(error => {
         console.log(error);
@@ -53,38 +60,53 @@ function FavList({ info }) {
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableCell scope="col" border="bottom">
-            Song Title
-          </TableCell>
-          <TableCell scope="col" border="bottom">
-            Artist Name
-          </TableCell>
-          <TableCell scope="col" border="bottom">
-            Duration
-          </TableCell>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {favorites.map((favorite, id) => (
-          <TableRow key={id}>
-            <TableCell scope="row">
-              <strong>{favorite.track_name}</strong>
+    <Fragment>
+      <Box
+        align="center"
+        responsive={true}
+        direction="row"
+        height="xxsmall"
+        alignSelf="center"
+      >
+        {deleteMessage ? (
+          <Heading level="3" margin="none">
+            {deleteMessage}
+          </Heading>
+        ) : null}
+      </Box>
+      <Table alignSelf="center">
+        <TableHeader>
+          <TableRow>
+            <TableCell scope="col" border="bottom" size="medium">
+              Song Title
             </TableCell>
-            <TableCell>{favorite.artist_name}</TableCell>
-            <TableCell>{favorite.duration_ms / 1000}</TableCell>
-            <TableCell>
-              <Button
-                label="Remove"
-                onClick={() => removeSong(favorite.track_id)}
-              />
+            <TableCell scope="col" border="bottom">
+              Artist Name
+            </TableCell>
+            <TableCell scope="col" border="bottom">
+              Duration
             </TableCell>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {favorites.map((favorite, id) => (
+            <TableRow key={id}>
+              <TableCell scope="row">
+                <strong>{favorite.track_name}</strong>
+              </TableCell>
+              <TableCell>{favorite.artist_name}</TableCell>
+              <TableCell>{favorite.duration_ms / 1000}</TableCell>
+              <TableCell>
+                <Button
+                  label="Remove"
+                  onClick={() => removeSong(favorite.track_id)}
+                />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Fragment>
   );
 }
 

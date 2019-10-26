@@ -61,6 +61,7 @@ function Discover() {
     axiosWithAuth()
       .post('/music/similar', songValue)
       .then(response => {
+        console.log(response);
         setSongs(response.data.results);
         setLoading(false);
       })

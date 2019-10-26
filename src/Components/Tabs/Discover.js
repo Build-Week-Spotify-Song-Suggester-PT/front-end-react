@@ -84,7 +84,7 @@ function Discover() {
         alignSelf="center"
       >
         {songMessage ? (
-          <Heading level="3" margin="none">
+          <Heading level="3" margin="none" color="#0B5351">
             {songMessage}
           </Heading>
         ) : null}

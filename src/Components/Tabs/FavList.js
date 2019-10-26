@@ -69,7 +69,7 @@ function FavList({ info }) {
         alignSelf="center"
       >
         {deleteMessage ? (
-          <Heading level="3" margin="none">
+          <Heading level="3" margin="none" color="#0B5351">
             {deleteMessage}
           </Heading>
         ) : null}

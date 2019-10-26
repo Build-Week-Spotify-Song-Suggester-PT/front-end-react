@@ -18,11 +18,16 @@ const WelcomeMessage = ({ message }) => {
   };
 
   return (
-    <div style={visible ? { display: 'block' } : { display: 'none' }}>
+    <div
+      style={
+        visible
+          ? { display: 'flex', justifyContent: 'center' }
+          : { display: 'none' }
+      }
+    >
       <Box align="center" responsive={true} direction="row">
         {/* TESTING */}
-        <h2>THIS IS FOR A TEST</h2>
-        {/* <h2>{message}</h2> */}
+        <h2>{message}</h2>
         <button
           type="button"
           onClick={clickHandler}

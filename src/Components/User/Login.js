@@ -3,8 +3,6 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginAction } from '../../store/actions/authDataActions/loginAction';
 import { clearAuthData } from '../../store/actions/authDataActions/clearAuthData';
-
-// Testing loading component
 import Loading from '../Loading';
 
 //Styling Library
@@ -18,33 +16,28 @@ const Login = ({
   clearAuthData
 }) => {
   //Loading state set locally
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     clearAuthData();
-
-    //After one second, set loading to false (mimicking server fetch)
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
   }, [clearAuthData]);
 
   if (authenticated) {
     return <Redirect to={`/user/${userID}`} />;
   }
 
-  //Render loading component based on loading state
-  if (loading) {
+  //Render loading component based on if loading state is true and errors are false
+  if (!error && loading) {
     return <Loading />;
   }
 
   const submitHandler = e => {
     loginAction(e.value);
+    setLoading(true);
   };
 
   return (
     <Box
-      height="xxlarge"
       responsive={true}
       width={{ max: '700px' }}
       margin={{ horizontal: 'auto' }}

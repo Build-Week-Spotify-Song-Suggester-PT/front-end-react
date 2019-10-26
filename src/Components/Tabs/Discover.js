@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
 import Loading from '../Loading';
 import {
@@ -7,12 +7,15 @@ import {
   TableCell,
   TableHeader,
   TableRow,
-  Button
+  Button,
+  Box,
+  Heading
 } from 'grommet';
 
 function Discover() {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [songMessage, setSongMessage] = useState('');
 
   useEffect(() => {
     const initialSong = {
@@ -23,7 +26,6 @@ function Discover() {
     axiosWithAuth()
       .post('/music/similar', initialSong)
       .then(response => {
-        console.log(response.data.results);
         setSongs(response.data.results);
         setLoading(false);
       })
@@ -32,57 +34,100 @@ function Discover() {
       });
   }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   const addSong = song => {
-    console.log(song);
     const songValue = {
       track_id: `${song}`
     };
-    console.log(songValue);
     axiosWithAuth()
       .post('/music/save', songValue)
       .then(res => {
-        console.log(res);
+        setSongMessage(res.data.message);
+        setTimeout(() => {
+          setSongMessage('');
+        }, 2000);
       })
       .catch(error => {
         console.log(error);
       });
   };
 
-  // className="suggested-song-list"
+  const getSimilar = song => {
+    setLoading(true);
+    const songValue = {
+      track_id: `${song}`,
+      number_like: 20
+    };
+
+    axiosWithAuth()
+      .post('/music/similar', songValue)
+      .then(response => {
+        console.log(response);
+        setSongs(response.data.results);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.log('Server Error', error);
+      });
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableCell scope="col" border="bottom">
-            Song Title
-          </TableCell>
-          <TableCell scope="col" border="bottom">
-            Artist Name
-          </TableCell>
-          <TableCell scope="col" border="bottom">
-            Duration
-          </TableCell>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {songs.map((song, id) => (
-          <TableRow key={id}>
-            <TableCell scope="row" key={song.track_id}>
-              <strong>{song.track_name}</strong>
+    <Fragment>
+      <Box
+        align="center"
+        responsive={true}
+        direction="row"
+        height="xxsmall"
+        alignSelf="center"
+      >
+        {songMessage ? (
+          <Heading level="3" margin="none" color="#0B5351">
+            {songMessage}
+          </Heading>
+        ) : null}
+      </Box>
+      <Table margin={{ horizontal: 'auto' }}>
+        <TableHeader>
+          <TableRow>
+            <TableCell scope="col" border="bottom">
+              Song Title
             </TableCell>
-            <TableCell>{song.artist_name}</TableCell>
-            <TableCell>{song.duration_ms / 1000}</TableCell>
-            <TableCell>
-              <Button label="Add" onClick={() => addSong(song.track_id)} />
+            <TableCell scope="col" border="bottom">
+              Artist Name
+            </TableCell>
+            <TableCell scope="col" border="bottom">
+              Duration
             </TableCell>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {songs.map((song, id) => (
+            <TableRow key={id}>
+              <TableCell scope="row" key={song.track_id}>
+                <strong>{song.track_name}</strong>
+              </TableCell>
+              <TableCell>{song.artist_name}</TableCell>
+              <TableCell>{song.duration_ms / 1000}</TableCell>
+              <TableCell>
+                <Button
+                  margin="xsmall"
+                  label="Add Song"
+                  onClick={() => addSong(song.track_id)}
+                />
+                <Button
+                  margin="xsmall"
+                  label="Get Similar"
+                  onClick={() => getSimilar(song.track_id)}
+                />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Fragment>
   );
 }
 

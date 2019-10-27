@@ -1,7 +1,6 @@
 import React from 'react';
-import { Box, Tabs, Tab, Heading, Text } from 'grommet';
-import SuggestedSongs from './SuggestedSongs';
-import { Box, Tabs, Tab } from 'grommet';
+import { Box, Tabs, Tab, Text } from 'grommet';
+// import SuggestedSongs from './SuggestedSongs';
 import MyProfile from './MyProfile';
 import Discover from './Discover';
 import FavList from './FavList';

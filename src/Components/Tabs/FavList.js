@@ -3,16 +3,10 @@ import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
 import Loading from '../Loading';
 
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableRow,
   Button,
   Box,
-  Button,
-  Heading, DataTable
-  Heading
+  Heading,
+  DataTable
 } from 'grommet';
 
 function FavList({ info }) {
@@ -77,6 +71,10 @@ function FavList({ info }) {
         property: 'Duration',
         header: 'Duration',
     },
+    {
+      property: 'Button',
+      header: 'Remove Song',
+    }
     
   
     
@@ -87,21 +85,13 @@ function FavList({ info }) {
     Artist: song.artist_name,
     Song: song.track_name,
     Duration: song.duration_ms / 1000 + ' ms',
+    Button:  <Button
+    label="Remove"
+    onClick={() => removeSong(song.track_id)}  primary color="#000"
+    margin='xsmall'
+  />
   }));
 
-  return (
-  <Box margin='0 auto' width='100%' height='1050px' responsive='true' background={{ color:'white'
-}}>
-    <Box align='center' margin='5px auto' width='100%' responsive='true' >
-      <Heading color='white' margin='auto'>My Music</Heading>
-      <DataTable  sortable='false' size='medium' columns={columns} data={DATA} background={{
-      header: "dark-4",
-      body: ["neutral-3", "neutral-2"],
-      footer: "dark-3"
-      }} />
-    </Box>
-  </Box>
-  )  
   return (
     <Fragment>
       <Box
@@ -117,40 +107,18 @@ function FavList({ info }) {
           </Heading>
         ) : null}
       </Box>
-      <Table alignSelf="center">
-        <TableHeader>
-          <TableRow>
-            <TableCell scope="col" border="bottom" size="medium">
-              Song Title
-            </TableCell>
-            <TableCell scope="col" border="bottom">
-              Artist Name
-            </TableCell>
-            <TableCell scope="col" border="bottom">
-              Duration
-            </TableCell>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {favorites.map((favorite, id) => (
-            <TableRow key={id}>
-              <TableCell scope="row">
-                <strong>{favorite.track_name}</strong>
-              </TableCell>
-              <TableCell>{favorite.artist_name}</TableCell>
-              <TableCell>{favorite.duration_ms / 1000}</TableCell>
-              <TableCell>
-                <Button
-                  label="Remove"
-                  onClick={() => removeSong(favorite.track_id)}
-                />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Fragment>
-  );
+  <Box margin='0 auto' width='100%' align='center' height='600px' responsive={true} >
+      <DataTable sortable='true' size='medium' columns={columns} data={DATA} background={{
+      header: "dark-1",
+      body: ["dark-3", "dark-2"],
+      footer: "dark-3"
+      }} />
+  </Box>
+  </Fragment>
+  )  
+  
+    
+     
 }
 
 export default FavList;

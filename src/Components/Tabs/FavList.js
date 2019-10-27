@@ -108,7 +108,7 @@ function FavList({ info }) {
         ) : null}
       </Box>
   <Box margin='0 auto' width='100%' align='center' height='600px' responsive={true} >
-      <DataTable sortable='true' size='medium' columns={columns} data={DATA} background={{
+      <DataTable size='medium' primaryKey='track_id' sortable={true} columns={columns} data={DATA} background={{
       header: "dark-1",
       body: ["dark-3", "dark-2"],
       footer: "dark-3"

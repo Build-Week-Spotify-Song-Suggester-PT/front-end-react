@@ -2,14 +2,10 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { axiosWithAuth } from '../../Auth/AxiosWithAuth';
 import Loading from '../Loading';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableRow,
   Button,
   Box,
-  Heading
+  Heading,
+  DataTable
 } from 'grommet';
 
 function Discover() {
@@ -69,6 +65,53 @@ function Discover() {
       });
   };
 
+  const columns = [
+        
+    {
+      property: 'Artist',
+      header: 'Artist',
+    },
+    {
+      property: 'Song',
+      header: 'Song',
+    },
+    {
+        property: 'Duration',
+        header: 'Duration',
+    },
+    {
+        property: 'Button',
+        header: 'Add Song',
+    },
+    {
+        property: 'Button2',
+        header: 'Similar Songs',
+    }
+    
+  
+    
+  ];
+  
+  const DATA = songs.map(song => ({
+    Key: song.track_id,
+    Artist: song.artist_name,
+    Song: song.track_name,
+    Duration: song.duration_ms / 1000 + ' ms',
+    Button: <Button margin="xsmall"
+    label="Add"
+    onClick={() => addSong(song.track_id)} 
+    primary color="#000"
+    />,
+    
+    Button2: <Button
+    margin="xsmall"
+    label="Similar"
+    onClick={() => getSimilar(song.track_id)}
+    primary color="#000"
+  /> 
+    
+  }));
+
   if (loading) {
     return <Loading />;
   }
@@ -88,44 +131,14 @@ function Discover() {
           </Heading>
         ) : null}
       </Box>
-      <Table margin={{ horizontal: 'auto' }}>
-        <TableHeader>
-          <TableRow>
-            <TableCell scope="col" border="bottom">
-              Song Title
-            </TableCell>
-            <TableCell scope="col" border="bottom">
-              Artist Name
-            </TableCell>
-            <TableCell scope="col" border="bottom">
-              Duration
-            </TableCell>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {songs.map((song, id) => (
-            <TableRow key={id}>
-              <TableCell scope="row" key={song.track_id}>
-                <strong>{song.track_name}</strong>
-              </TableCell>
-              <TableCell>{song.artist_name}</TableCell>
-              <TableCell>{song.duration_ms / 1000}</TableCell>
-              <TableCell>
-                <Button
-                  margin="xsmall"
-                  label="Add Song"
-                  onClick={() => addSong(song.track_id)}
-                />
-                <Button
-                  margin="xsmall"
-                  label="Get Similar"
-                  onClick={() => getSimilar(song.track_id)}
-                />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <Box margin='0 auto' width='100%' align='center' height='600px' responsive={true} >
+        
+          <DataTable primaryKey='track_id' sortable={true} size='medium' columns={columns} data={DATA} background={{
+      header: "dark-1",
+      body: ["dark-3", "dark-2"],
+      }} />
+      </Box>
+
     </Fragment>
   );
 }

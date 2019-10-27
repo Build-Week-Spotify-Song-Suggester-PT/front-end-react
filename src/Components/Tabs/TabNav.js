@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Tabs, Tab } from 'grommet';
+import { Box, Tabs, Tab, Text } from 'grommet';
+// import SuggestedSongs from './SuggestedSongs';
 import MyProfile from './MyProfile';
 import Discover from './Discover';
 import FavList from './FavList';
@@ -12,6 +13,7 @@ const TabNav = ({ match, history }) => {
       <Tabs>
         <Tab title="Saved Songs">
           <Box pad="medium">
+            <Text textAlign="center" size="xxxsmall">Head on over to Discover to add new songs!</Text>
             <FavList info={match} />
           </Box>
         </Tab>
